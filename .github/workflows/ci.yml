@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: ['codex/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Calidad y pruebas
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Instalar Flutter 3.47.1 desde el repositorio oficial
+        run: |
+          git clone --depth 1 --branch 3.47.1 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - name: Verificar versión
+        run: flutter --version
+      - name: Dependencias bloqueadas
+        run: flutter pub get --enforce-lockfile
+      - name: Formato
+        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Análisis
+        run: flutter analyze --fatal-infos
+      - name: Pruebas y cobertura
+        run: flutter test --coverage
+      - name: Compilación web
+        run: flutter build web --release
+      - name: Guardar build web
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: airelibre-web
+          path: build/web/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Guardar cobertura
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: cobertura
+          path: coverage/lcov.info
+          if-no-files-found: ignore
+          retention-days: 14
