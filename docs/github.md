@@ -1,5 +1,7 @@
 # Guía práctica de GitHub
 
+Para el flujo completo de autor, revisor, correcciones y conflictos, consultar [reparto y PRs](reparto_y_prs.md). El PR inicial debe integrarse antes de crear funciones desde main.
+
 ## Qué es cada elemento
 
 - Commit: una versión pequeña de tus cambios.
