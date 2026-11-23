@@ -42,6 +42,8 @@ GitHub: Compare & pull request → base main → explicar el cambio y las prueba
 
 Guías: [GitHub y PRs](docs/github.md), [propuesta](docs/propuesta.md), [especificación](spec/spec.md), [arquitectura](docs/arquitectura.md).
 
+Plan de equipo: [reparto equilibrado, PR paso a paso y matriz completa de rúbrica](docs/reparto_y_prs.md). Los puntos estiman esfuerzo pendiente; no equivalen a la nota ni acreditan implementación.
+
 ## Planificación y equipo
 
 [Planificación en Notion](https://app.notion.com/p/4216c087ff0181008c3af580d5a69329). Roles A/B pendientes de asignar: 24 puntos cada uno y 12 compartidos. La evidencia de evaluación se conserva en GitHub.
